@@ -12,6 +12,12 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirtection;
     Rigidbody rb;
 
+    [Header("acceleration")]
+    public float highSpeed;
+    public KeyCode hightKey = KeyCode.RightAlt;
+    private float limitSpeed; 
+    private bool highted;
+
     [Header("Jump")]
     public float jumpForce;
     public float jumpCoolDown;
@@ -42,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         GroundDrag();
-
     }
 
     private void FixedUpdate()
@@ -62,6 +67,18 @@ public class PlayerMovement : MonoBehaviour
 
             Invoke(nameof(ResetJump), jumpCoolDown);
         }
+
+        if (Input.GetKey(hightKey) && grounded)
+        {
+            highted = true;
+            limitSpeed = moveSpeed * highSpeed;
+        }    
+        else
+        {
+            highted = false;
+            limitSpeed = moveSpeed;
+        }
+
     }
 
     void MyMove()
@@ -69,7 +86,9 @@ public class PlayerMovement : MonoBehaviour
         // calculate movement direction
         moveDirtection = transform.forward * verticalInput + transform.right * horizontalInput;
 
-        if (grounded)
+        if (highted)
+            rb.AddForce(moveDirtection * moveSpeed * 10f * highSpeed, ForceMode.Force);
+        else if (grounded)
             rb.AddForce(moveDirtection * moveSpeed * 10f, ForceMode.Force);
         else if (!grounded)
             rb.AddForce(moveDirtection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
@@ -90,7 +109,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 flatVel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
 
         // limit velocity if needed
-        if (flatVel.magnitude > moveSpeed)
+        if (flatVel.magnitude > limitSpeed)
         {
             Vector3 limtedVel = flatVel.normalized * moveSpeed;
             rb.velocity = new Vector3(limtedVel.x, rb.velocity.y, limtedVel.z);
