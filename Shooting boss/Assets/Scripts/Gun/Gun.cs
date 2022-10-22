@@ -8,11 +8,11 @@ public class Gun : MonoBehaviour
     public GameObject bullet;
     public Transform Cam;
     public Transform posShoot;
-    public bool readyToShoot;
     public float shootForce;
     public KeyCode shootKey = KeyCode.Mouse0;
+    private bool readyToShoot;
 
-    public Animator anim;
+    private Animator anim;
 
     void Start()
     {
@@ -49,7 +49,7 @@ public class Gun : MonoBehaviour
 
         IEnumerator End_Shoot ()
         {
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.5f);
             anim.SetBool("Shooting", false);
             readyToShoot = true;
         }
