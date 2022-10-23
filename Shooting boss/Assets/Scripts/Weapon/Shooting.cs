@@ -67,7 +67,7 @@ public class Shooting : MonoBehaviour
         {
             
             Vector3 targetLine = (target - posShoot.position).normalized;
-            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], posShoot.position, bullet[0].transform.rotation);
+            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], posShoot.position, Cam.transform.rotation);
             Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
 
             projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
@@ -85,7 +85,7 @@ public class Shooting : MonoBehaviour
         {
             anim.SetBool("Shooting", true);
             readyToShoot = false;
-            StartCoroutine(End_Shoot());
+            Invoke("End_Shoot", 0.5f);
         }
 
         void Boomerang ()
@@ -100,9 +100,8 @@ public class Shooting : MonoBehaviour
             boomerangIsReady = true;
         }
 
-        IEnumerator End_Shoot ()
+        void  End_Shoot ()
         {
-            yield return new WaitForSeconds(0.5f);
             anim.SetBool("Shooting", false);
             readyToShoot = true;
         }

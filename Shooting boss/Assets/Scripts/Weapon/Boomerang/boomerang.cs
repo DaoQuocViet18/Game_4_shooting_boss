@@ -13,6 +13,8 @@ public class boomerang : MonoBehaviour
     private Vector3 originPos;
 
     [Header("throw back")]
+    //public float smooth = 8;
+    //public float pull = 4;
     public KeyCode backKey = KeyCode.RightShift;
 
     [Header("teleport")]
@@ -43,8 +45,7 @@ public class boomerang : MonoBehaviour
         if (Input.GetKeyDown(telKey))
         {
             telParticle_close = Instantiate(telParticle, playerCam.transform.position + Vector3.down, telParticle.transform.rotation);
-
-            StartCoroutine(teleport_Effect());
+            Invoke("teleport_Effect", 0.5f);
         }
 
         if (Input.GetKeyDown(backKey))
@@ -60,12 +61,29 @@ public class boomerang : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
 
-    IEnumerator teleport_Effect ()
+    void teleport_Effect ()
     {
-        yield return new WaitForSeconds(1f);
         playerCam.orientation.position = transform.position;
         shooting.ResetBoomerang();
         Destroy(telParticle_close.gameObject);
         Destroy(gameObject);
     }
+
+    //void BoomerangBack ()
+    //{
+
+    //    for (int i = 0; i < smooth; i++)
+    //    {
+    //        GetBQCpoint(i/(float)(smooth+1), )
+    //    }
+    //}
+
+    //Vector3 GetBQCpoint (float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    //{
+    //    float u = 1 - t;
+    //    float uu = u * u;
+    //    float tt = t * t;
+    //    Vector3 p = (uu * p0) + (2 * u * t * p1) + (tt * p2);
+    //    return p;
+    //}
 }

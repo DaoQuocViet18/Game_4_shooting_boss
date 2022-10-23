@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public ParticleSystem par_Bullet;
+    ParticleSystem par;
+    PlayerCam playerCam;
     void Start()
     {
-        
+        playerCam = GameObject.Find("Main Camera").GetComponent<PlayerCam>();
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        
+        par = Instantiate(par_Bullet, transform.position, transform.rotation);
+        par.transform.LookAt(playerCam.orientation);
+        gameObject.SetActive(false);
+        Invoke("End", 5);
+    }
+
+    void End ()
+    {
+        Destroy(par.gameObject);
         Destroy(gameObject);
     }
 }
