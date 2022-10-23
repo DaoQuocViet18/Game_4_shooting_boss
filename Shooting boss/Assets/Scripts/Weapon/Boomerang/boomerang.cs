@@ -18,6 +18,8 @@ public class boomerang : MonoBehaviour
     [Header("teleport")]
     PlayerCam playerCam;
     Shooting shooting;
+    public ParticleSystem telParticle;
+    private ParticleSystem telParticle_close;
     public KeyCode telKey = KeyCode.Mouse1;
 
     // Start is called before the first frame update
@@ -38,18 +40,19 @@ public class boomerang : MonoBehaviour
         }
             transform.Rotate(Vector3.up * -rotaSpeed, Space.Self);
 
-        if (Input.GetKey(telKey))
+        if (Input.GetKeyDown(telKey))
         {
-            playerCam.orientation.position = transform.position;
-            shooting.ResetBoomerang();
-            Destroy(gameObject);
+            telParticle_close = Instantiate(telParticle, playerCam.transform.position + Vector3.down, telParticle.transform.rotation);
+
+            StartCoroutine(teleport_Effect());
         }
 
-        if (Input.GetKey(backKey))
+        if (Input.GetKeyDown(backKey))
         {
             shooting.ResetBoomerang();
             Destroy(gameObject);
         }
+          
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -57,4 +60,12 @@ public class boomerang : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezePosition;
     }
 
+    IEnumerator teleport_Effect ()
+    {
+        yield return new WaitForSeconds(1f);
+        playerCam.orientation.position = transform.position;
+        shooting.ResetBoomerang();
+        Destroy(telParticle_close.gameObject);
+        Destroy(gameObject);
+    }
 }

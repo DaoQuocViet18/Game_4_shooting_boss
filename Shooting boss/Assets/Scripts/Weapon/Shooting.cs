@@ -96,7 +96,7 @@ public class Shooting : MonoBehaviour
 
         public  void ResetBoomerang ()
         {
-        boomerang.SetActive(true);
+            boomerang.SetActive(true);
             boomerangIsReady = true;
         }
 

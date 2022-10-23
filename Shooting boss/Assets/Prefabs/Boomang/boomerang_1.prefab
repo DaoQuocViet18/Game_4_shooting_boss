@@ -169,6 +169,7 @@ MonoBehaviour:
   shootForce: 40
   limit: 20
   backKey: 303
+  telParticle: {fileID: 7929212991625078825, guid: 9c7f13c54a3e73a40bd1ecca03ecdcfb, type: 3}
   telKey: 324
 --- !u!1 &1673150752973808711
 GameObject:
