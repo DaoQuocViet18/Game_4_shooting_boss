@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirtection;
-    Rigidbody rb;
+    public  Rigidbody rb;
 
     [Header("acceleration")]
     public float highSpeed;

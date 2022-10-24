@@ -10,6 +10,7 @@ public class Shooting : MonoBehaviour
     public Transform posShoot;
     public float shootForce;
     public KeyCode shootKey = KeyCode.Mouse0;
+    private PlayerMovement playerMovement;
     private bool readyToShoot;
 
     private Animator anim;
@@ -26,6 +27,7 @@ public class Shooting : MonoBehaviour
     {
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         readyToShoot = true;
     }
 
@@ -65,12 +67,12 @@ public class Shooting : MonoBehaviour
     }
         void Shoot (Vector3 target)
         {
-            
             Vector3 targetLine = (target - posShoot.position).normalized;
-            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], posShoot.position, Cam.transform.rotation);
+            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], new Vector3(0, -50, 0), Cam.transform.rotation);
             Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
 
             projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
+            currentBul.transform.position = posShoot.transform.position;
         }
 
         void Action ()
