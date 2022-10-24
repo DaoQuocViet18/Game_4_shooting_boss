@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour
     public ParticleSystem par_Bullet;
     ParticleSystem par;
     PlayerCam playerCam;
+
     void Start()
     {
         playerCam = GameObject.Find("Main Camera").GetComponent<PlayerCam>();
@@ -20,14 +21,17 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        //collision.gameObject.GetComponent<MeshCollider>().enabled = true;
+
         par = Instantiate(par_Bullet, transform.position, transform.rotation);
         par.transform.LookAt(playerCam.orientation);
+
+
         gameObject.SetActive(false);
         Invoke("End", 5);
     }
 
-    void End ()
+    void End()
     {
         Destroy(par.gameObject);
         Destroy(gameObject);
