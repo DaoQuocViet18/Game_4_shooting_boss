@@ -36,16 +36,28 @@ public class boomerang : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        transform.Rotate(Vector3.up * -rotaSpeed, Space.Self);
+
         if ((transform.position - originPos).magnitude >= limit) 
         {
             rb.constraints = RigidbodyConstraints.FreezePosition;
         }
-            transform.Rotate(Vector3.up * -rotaSpeed, Space.Self);
 
+        InputA();
+
+    }
+
+    void InputA()
+    {
         if (Input.GetKeyDown(telKey))
         {
             telParticle_close = Instantiate(telParticle, playerCam.transform.position + Vector3.down, telParticle.transform.rotation);
             Invoke("teleport_Effect", 0.5f);
+        }
+
+        if (telParticle_close != null)
+        {
+            telParticle_close.transform.position = playerCam.transform.position + Vector3.down;
         }
 
         if (Input.GetKeyDown(backKey))
@@ -53,7 +65,6 @@ public class boomerang : MonoBehaviour
             shooting.ResetBoomerang();
             Destroy(gameObject);
         }
-          
     }
 
     private void OnCollisionEnter(Collision collision)

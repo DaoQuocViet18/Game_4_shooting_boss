@@ -5,11 +5,13 @@ using UnityEngine;
 public class WeaponSwitching : MonoBehaviour
 {
     public int selectWeapon = 0;
+    Shooting shooting;
 
     // Start is called before the first frame update
     void Start()
-    {    
-        SelectWeapon();
+    {
+        shooting = GetComponent<Shooting>();
+        SelectWeapon();   
     }
 
     // Update is called once per frame
@@ -55,7 +57,7 @@ public class WeaponSwitching : MonoBehaviour
         int i = 0;
         foreach (Transform weapon in transform) 
         {
-            if (i == selectWeapon)
+            if (i == selectWeapon && shooting.IsReady[i] == true)
                 weapon.gameObject.SetActive(true);
             else
                 weapon.gameObject.SetActive(false);

@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
-
+    private float speed;
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirtection;
@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public KeyCode hightKey = KeyCode.RightAlt;
     private float limitSpeed; 
     private bool highted;
+    private Animator anim;
 
     [Header("Jump")]
     public float jumpForce;
@@ -37,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        anim = GameObject.Find("Weapon").GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
@@ -53,6 +55,13 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MyMove();
+        anim.SetFloat("Speed", speed);
+
+        if (speed >= 25)
+            anim.SetBool("Running", true);
+        else
+            anim.SetBool("Running", false);
+
     }
 
     void MyInput()
@@ -87,11 +96,13 @@ public class PlayerMovement : MonoBehaviour
         moveDirtection = transform.forward * verticalInput + transform.right * horizontalInput;
 
         if (highted)
-            rb.AddForce(moveDirtection * moveSpeed * 10f * highSpeed, ForceMode.Force);
+            speed = moveSpeed * highSpeed;
         else if (grounded)
-            rb.AddForce(moveDirtection * moveSpeed * 10f, ForceMode.Force);
+            speed = moveSpeed;
         else if (!grounded)
-            rb.AddForce(moveDirtection * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            speed = moveSpeed * airMultiplier;
+
+        rb.AddForce(moveDirtection * speed * 10f, ForceMode.Force);
     }
 
     void GroundDrag()

@@ -8,27 +8,29 @@ public class Shooting : MonoBehaviour
     public GameObject[] bullet;
     public Transform Cam;
     public Transform posShoot;
-    public float shootForce;
+    public float[] shootForce;
     public KeyCode shootKey = KeyCode.Mouse0;
-    private PlayerMovement playerMovement;
-    private bool readyToShoot;
 
     private Animator anim;
     private WeaponSwitching weaponSwitching;
 
-    [Header("Gun")]
-    public bool gunIsReady = true;
+    [Header("Weapons")]
+    public GameObject[] weapon;
+    public bool[] IsReady;
 
-    [Header("Boomerang")]
-    public GameObject boomerang;
-    public bool boomerangIsReady = true;
+    private void Awake()
+    {
+        IsReady = new bool[weapon.Length];
+        for (int i = 0; i < weapon.Length; i++)
+        {
+            IsReady[i] = true;
+        }
+    }
 
     void Start()
     {
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
-        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        readyToShoot = true;
     }
 
 
@@ -36,75 +38,72 @@ public class Shooting : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Input.GetKeyDown(shootKey) && readyToShoot == true && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
+        if (Input.GetKeyDown(shootKey) && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
         {
-            if (boomerangIsReady == true && weaponSwitching.selectWeapon == 1)
+            for (int i = 0; i < weapon.Length; i++)
             {
-                Shoot(hit.point);
-                Action();
-            }
-            else if (gunIsReady == true && weaponSwitching.selectWeapon == 0)
-            {
-                Shoot(hit.point);
-                Action();
+                if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
+                {
+                    Shoot(hit.point, shootForce[i]);
+                    Action();
+                }
             }
         }
-        else if (Input.GetKeyDown(shootKey) && readyToShoot == true )
+        else if (Input.GetKeyDown(shootKey))
         {
             Vector3 target = transform.position + transform.forward * 20;
-            if (boomerangIsReady == true && weaponSwitching.selectWeapon == 1)
+            for (int i = 0; i < weapon.Length; i++)
             {
-                Shoot(target);
-                Action();
-            }
-            else if (gunIsReady == true && weaponSwitching.selectWeapon == 0)
-            {
-                Shoot(target);
-                Action();
+                if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
+                {
+                    Shoot(target, shootForce[i]);
+                    Action();
+                }
             }
         }
 
     }
-        void Shoot (Vector3 target)
+        void Shoot (Vector3 target, float shootForce)
         {
             Vector3 targetLine = (target - posShoot.position).normalized;
-            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], new Vector3(0, -50, 0), Cam.transform.rotation);
+            GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], posShoot.transform.position, Cam.transform.rotation);
             Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
 
             projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
-            currentBul.transform.position = posShoot.transform.position;
         }
 
         void Action ()
         {
-            if (weaponSwitching.selectWeapon == 0)
+            if (weaponSwitching.selectWeapon == 0 && IsReady[0] == true)
                 Gun();
-            else if (weaponSwitching.selectWeapon == 1)
+            else if (weaponSwitching.selectWeapon == 1 && IsReady[1] == true)
                 Boomerang();
         }
 
         void Gun ()
         {
             anim.SetBool("Shooting", true);
-            readyToShoot = false;
             Invoke("End_Shoot", 0.5f);
         }
 
         void Boomerang ()
         {
-            boomerang.SetActive(false);
-            boomerangIsReady = false;
+            weapon[1].SetActive(false);
+            IsReady[1] = false;
         }
 
         public  void ResetBoomerang ()
         {
-            boomerang.SetActive(true);
-            boomerangIsReady = true;
+            weapon[0].SetActive(false);
+            weaponSwitching.selectWeapon = 1;
+
+            weapon[1].SetActive(true);
+            IsReady[1] = true;
         }
 
         void  End_Shoot ()
         {
             anim.SetBool("Shooting", false);
-            readyToShoot = true;
+            IsReady[0] = true;
         }
 }

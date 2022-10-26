@@ -16,6 +16,8 @@ public class Bullet : MonoBehaviour
 
     void Update()
     {
+        if ((transform.position - playerCam.transform.position).magnitude >= 200)
+            Destroy(gameObject);
 
     }
 
