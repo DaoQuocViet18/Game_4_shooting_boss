@@ -12,11 +12,11 @@ public class PlayerMovement : MonoBehaviour
     Vector3 moveDirtection;
     public  Rigidbody rb;
 
-    [Header("acceleration")]
+    [Header("Running")]
     public float highSpeed;
     public KeyCode hightKey = KeyCode.RightAlt;
     private float limitSpeed; 
-    private bool highted;
+    public  bool running;
     private Animator anim;
 
     [Header("Jump")]
@@ -33,7 +33,10 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     private bool grounded;
 
-
+    [Header("Wall Check")]
+    public int rayAmount;
+    public float halfRange;
+    public float distance;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         GroundDrag();
+        BoundWall(rayAmount, halfRange);
     }
 
     private void FixedUpdate()
@@ -79,12 +83,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(hightKey) && grounded)
         {
-            highted = true;
+            running = true;
             limitSpeed = moveSpeed * highSpeed;
         }    
         else
         {
-            highted = false;
+            running = false;
             limitSpeed = moveSpeed;
         }
 
@@ -93,9 +97,12 @@ public class PlayerMovement : MonoBehaviour
     void MyMove()
     {
         // calculate movement direction
-        moveDirtection = transform.forward * verticalInput + transform.right * horizontalInput;
+        if (running)
+            moveDirtection = transform.forward * verticalInput;
+        else
+            moveDirtection = transform.forward * verticalInput + transform.right * horizontalInput;
 
-        if (highted)
+        if (running)
             speed = moveSpeed * highSpeed;
         else if (grounded)
             speed = moveSpeed;
@@ -139,4 +146,41 @@ public class PlayerMovement : MonoBehaviour
     {
         readyToJump = true;
     }
+
+    void BoundWall(int rayAmount, float halfRange)
+    {
+        Vector3[] dirs = new Vector3[rayAmount];
+        float angularStep = 2f * Mathf.PI / (float)rayAmount;
+        float currentAngle = angularStep / 2f;
+
+        for (int i = 0; i < rayAmount; ++i)
+        {
+            dirs[i] = transform.right * Mathf.Cos(currentAngle) + transform.forward * Mathf.Sin(currentAngle);
+            currentAngle += angularStep;
+        }
+
+        foreach (Vector3 dir in dirs)
+        {
+            RaycastHit hit;
+
+            Ray ray = new Ray(transform.position + dir * halfRange , dir);
+            Debug.DrawRay(ray.origin, ray.direction.normalized * distance, Color.red);
+            if (Physics.Raycast(ray.origin, ray.direction.normalized * distance, out hit, distance))
+            {
+                Debug.DrawRay(hit.point, hit.normal * speed, Color.green);
+                rb.AddForce(hit.normal.normalized * speed, ForceMode.Force);
+            }
+        }
+
+        //for (int i = 0; i < 10; i++)
+        //{
+            
+        //    Debug.DrawRay(transform.position, transform.forward * bound, Color.red);
+        //    if (Physics.Raycast(transform.position, transform.forward, bound))
+        //    {
+        //        rb.AddForce(-moveDirtection * speed * 5f, ForceMode.Force);
+        //    }
+        //}
+    }
+
 }

@@ -12,6 +12,8 @@ public class PlayerCam : MonoBehaviour
     private float xRotation;
     private float yRotation;
 
+    public ParticleSystem teleport;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;

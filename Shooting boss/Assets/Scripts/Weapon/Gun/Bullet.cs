@@ -28,7 +28,6 @@ public class Bullet : MonoBehaviour
         par = Instantiate(par_Bullet, transform.position, transform.rotation);
         par.transform.LookAt(playerCam.orientation);
 
-
         gameObject.SetActive(false);
         Invoke("End", 5);
     }

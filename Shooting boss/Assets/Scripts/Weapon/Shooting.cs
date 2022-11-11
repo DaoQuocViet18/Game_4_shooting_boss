@@ -13,6 +13,7 @@ public class Shooting : MonoBehaviour
 
     private Animator anim;
     private WeaponSwitching weaponSwitching;
+    private PlayerMovement playerMovement;
 
     [Header("Weapons")]
     public GameObject[] weapon;
@@ -31,6 +32,7 @@ public class Shooting : MonoBehaviour
     {
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
+        playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
     }
 
 
@@ -38,27 +40,26 @@ public class Shooting : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (Input.GetKeyDown(shootKey) && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
+        if (playerMovement.running == false)
         {
-            for (int i = 0; i < weapon.Length; i++)
+            if (Input.GetKeyDown(shootKey) && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
             {
-                if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
-                {
-                    Shoot(hit.point, shootForce[i]);
-                    Action();
-                }
+                for (int i = 0; i < weapon.Length; i++)
+                    if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
+                    {
+                        Shoot(hit.point, shootForce[i]);
+                        Action();
+                    }
             }
-        }
-        else if (Input.GetKeyDown(shootKey))
-        {
-            Vector3 target = transform.position + transform.forward * 20;
-            for (int i = 0; i < weapon.Length; i++)
+            else if (Input.GetKeyDown(shootKey))
             {
-                if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
-                {
-                    Shoot(target, shootForce[i]);
-                    Action();
-                }
+                Vector3 target = transform.position + transform.forward * 20;
+                for (int i = 0; i < weapon.Length; i++)
+                    if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
+                    {
+                        Shoot(target, shootForce[i]);
+                        Action();
+                    }
             }
         }
 
