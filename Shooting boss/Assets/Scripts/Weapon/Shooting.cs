@@ -40,7 +40,7 @@ public class Shooting : MonoBehaviour
     {
         RaycastHit hit;
 
-        if (playerMovement.running == false)
+        if (playerMovement.running == false && weaponSwitching.selectWeapon != 2 && IsReady[weaponSwitching.selectWeapon] == true)
         {
             if (Input.GetKeyDown(shootKey) && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
             {
@@ -79,12 +79,15 @@ public class Shooting : MonoBehaviour
                 Gun();
             else if (weaponSwitching.selectWeapon == 1 && IsReady[1] == true)
                 Boomerang();
-        }
+        else if (weaponSwitching.selectWeapon == 2 && IsReady[2] == true)
+            Boomerang();
+    }
 
         void Gun ()
         {
+            IsReady[0] = false;
             anim.SetBool("Shooting", true);
-            Invoke("End_Shoot", 0.5f);
+            Invoke("End_Shoot", 0.1f);
         }
 
         void Boomerang ()
