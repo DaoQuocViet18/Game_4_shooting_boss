@@ -18,7 +18,12 @@ public class Shooting : MonoBehaviour
     [Header("Weapons")]
     public GameObject[] weapon;
     public bool[] IsReady;
+    public GameObject gun_Flash;
 
+
+    [Header("Bar")]
+    public int border_mana = 3;
+    HealthBar healthBar;
     private void Awake()
     {
         IsReady = new bool[weapon.Length];
@@ -33,40 +38,33 @@ public class Shooting : MonoBehaviour
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
+        healthBar = GameObject.Find("Player").GetComponent<HealthBar>();
+        healthBar.setMaxMana(border_mana);
+        gun_Flash.SetActive(false);
     }
 
 
     void Update()
     {
-        RaycastHit hit;
-
-        if (playerMovement.running == false && weaponSwitching.selectWeapon != 2 && IsReady[weaponSwitching.selectWeapon] == true)
-        {
-            if (Input.GetKeyDown(shootKey) && Physics.Raycast(Cam.position, Cam.forward, out hit)) //&& gameObject.activeInHierarchy == true)
+        if (playerMovement.running == false && Input.GetKeyDown(shootKey))
+            if ( weaponSwitching.selectWeapon != 2)
             {
                 for (int i = 0; i < weapon.Length; i++)
                     if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
-                        Shoot(hit.point, shootForce[i]);
-            }
-            else if (Input.GetKeyDown(shootKey))
-            {
-                Vector3 target = transform.position + transform.forward * 20;
-                for (int i = 0; i < weapon.Length; i++)
-                    if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
-                        Shoot(target, shootForce[i]);
-            }
-        }
-        else if (weaponSwitching.selectWeapon == 2 && IsReady[2] == true)
-        {
-            if (Input.GetKeyDown(shootKey))
+                        Shoot(shootForce[i]);
+            }    
+            else if (weaponSwitching.selectWeapon == 2 && IsReady[2] == true)
                 StartCoroutine(Sword());
-        }   
-
-
-
     }
-    void Shoot(Vector3 target, float shootForce)
+    void Shoot(float shootForce)
     {
+        Vector3 target;
+        RaycastHit hit;
+        if (Physics.Raycast(Cam.position, Cam.forward, out hit))
+            target = hit.point;
+        else
+            target = transform.position + transform.forward * 20;
+
         Vector3 targetLine = (target - posShoot.position).normalized;
         GameObject currentBul = Instantiate(bullet[weaponSwitching.selectWeapon], posShoot.transform.position, Cam.transform.rotation);
         Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
@@ -81,16 +79,16 @@ public class Shooting : MonoBehaviour
             StartCoroutine(Gun());
         else if (weaponSwitching.selectWeapon == 1 && IsReady[1] == true)
             Boomerang();
-        else if (weaponSwitching.selectWeapon == 2 && IsReady[2] == true)
-            StartCoroutine(Sword());
     }
 
     IEnumerator Gun()
     {
         IsReady[0] = false;
+        gun_Flash.SetActive(true);
         anim.SetBool("Shooting", true);
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("Shooting", false);
+        gun_Flash.SetActive(false);
         IsReady[0] = true;
     }
 
@@ -101,13 +99,15 @@ public class Shooting : MonoBehaviour
     }
     public void ResetBoomerang()
     {
-        weapon[0].SetActive(false);
+        for (int i = 0; i < weapon.Length; i++)
+            weapon[i].SetActive(false);
+        
         weaponSwitching.selectWeapon = 1;
 
         weapon[1].SetActive(true);
-        IsReady[1] = true;
-    }
 
+        healthBar.takeMana();
+    }
 
     IEnumerator Sword()
     {
