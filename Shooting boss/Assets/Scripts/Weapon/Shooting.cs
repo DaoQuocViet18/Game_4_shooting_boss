@@ -7,7 +7,7 @@ public class Shooting : MonoBehaviour
     [Header("Shooting")]
     public GameObject[] bullet;
     public Transform Cam;
-    public Transform posShoot;
+    public Transform[] posShoot;
     public float[] shootForce;
     public KeyCode shootKey = KeyCode.Mouse0;
 
@@ -18,7 +18,7 @@ public class Shooting : MonoBehaviour
     [Header("Weapons")]
     public GameObject[] weapon;
     public bool[] IsReady;
-    public GameObject gun_Flash;
+    public GameObject[] effect;
 
 
     [Header("Bar")]
@@ -40,7 +40,7 @@ public class Shooting : MonoBehaviour
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         healthBar = GameObject.Find("Player").GetComponent<HealthBar>();
         healthBar.setMaxMana(border_mana);
-        gun_Flash.SetActive(false);
+        effect[0].SetActive(false);
     }
 
 
@@ -51,12 +51,12 @@ public class Shooting : MonoBehaviour
             {
                 for (int i = 0; i < weapon.Length; i++)
                     if (weaponSwitching.selectWeapon == i && IsReady[i] == true)
-                        Shoot(shootForce[i]);
+                        Shoot(shootForce[i], posShoot[i]);
             }    
             else if (weaponSwitching.selectWeapon == 2 && IsReady[2] == true)
                 StartCoroutine(Sword());
     }
-    void Shoot(float shootForce)
+    void Shoot(float shootForce, Transform posShoot)
     {
         Vector3 target;
         RaycastHit hit;
@@ -84,11 +84,11 @@ public class Shooting : MonoBehaviour
     IEnumerator Gun()
     {
         IsReady[0] = false;
-        gun_Flash.SetActive(true);
+        effect[0].SetActive(true);
         anim.SetBool("Shooting", true);
         yield return new WaitForSeconds(0.1f);
         anim.SetBool("Shooting", false);
-        gun_Flash.SetActive(false);
+        effect[0].SetActive(false);
         IsReady[0] = true;
     }
 
@@ -111,8 +111,10 @@ public class Shooting : MonoBehaviour
 
     IEnumerator Sword()
     {
+        effect[1].SetActive(true);
         anim.SetInteger("Sword", 1);
         yield return new WaitForSeconds(1f);
         anim.SetInteger("Sword", 0);
+        effect[1].SetActive(false);
     }    
 }

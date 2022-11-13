@@ -317,6 +317,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54532071}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &80034589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 80034590}
+  m_Layer: 0
+  m_Name: Position_Shoot_Boomerang
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &80034590
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 80034589}
+  m_LocalRotation: {x: -0.011544198, y: 0.8867338, z: -0.46160406, w: 0.022175997}
+  m_LocalPosition: {x: 0.07, y: -0.86, z: -0.57}
+  m_LocalScale: {x: 1.4999992, y: 1.4999998, z: 1.4999994}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3448385255141240455}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &100647158
 GameObject:
   m_ObjectHideFlags: 0
@@ -1775,7 +1806,9 @@ MonoBehaviour:
   - {fileID: 2248009616841630411, guid: 7654d2bb37aaed845b76c11dc2601a65, type: 3}
   - {fileID: 1012773863076743540, guid: 4d3a809da42f69a449edcc485d14bfe6, type: 3}
   Cam: {fileID: 963194228}
-  posShoot: {fileID: 1127473037}
+  posShoot:
+  - {fileID: 1127473037}
+  - {fileID: 80034590}
   shootForce:
   - 200
   - 60
@@ -1785,7 +1818,9 @@ MonoBehaviour:
   - {fileID: 2634870429840520253}
   - {fileID: 984593776}
   IsReady: 
-  gun_Flash: {fileID: 1305256791}
+  effect:
+  - {fileID: 1305256791}
+  - {fileID: 1999838329}
   border_mana: 3
 --- !u!1 &255262929
 GameObject:
@@ -3835,7 +3870,7 @@ Transform:
   - {fileID: 1366409423}
   - {fileID: 1877847960}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &766877128
 GameObject:
@@ -4779,7 +4814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 914799017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.11, y: 1.4437466, z: -0.36}
+  m_LocalPosition: {x: -9.11, y: 2, z: -0.36}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5493,7 +5528,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &984593777
 Transform:
   m_ObjectHideFlags: 0
@@ -5923,7 +5958,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1127473037}
   m_Layer: 0
-  m_Name: Position_Shoot
+  m_Name: Position_Shoot_Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5937,7 +5972,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1127473036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0013, y: 0.107, z: 0.692}
+  m_LocalPosition: {x: -0.0013, y: 0.107, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19450,7 +19485,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1999838330
 Transform:
   m_ObjectHideFlags: 0
@@ -20068,7 +20103,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8684913858871120935, guid: 5c2dc4a2dff084b47a552a44409dec86, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8684913858871120935, guid: 5c2dc4a2dff084b47a552a44409dec86, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20161,7 +20196,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &2792106207955962509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20241,6 +20276,7 @@ Transform:
   - {fileID: 5098822591523631756}
   - {fileID: 7770318124673529987}
   - {fileID: 6949952927474684713}
+  - {fileID: 80034590}
   m_Father: {fileID: 253909709}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 55, y: -177.135, z: 0}
