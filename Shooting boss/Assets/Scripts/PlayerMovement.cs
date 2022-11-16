@@ -37,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public int rayAmount;
     public float halfRange;
     public float distance;
+    public LayerMask layerMaskCheck;
 
     // Start is called before the first frame update
     void Start()
@@ -165,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
             Ray ray = new Ray(transform.position + dir * halfRange , dir);
             Debug.DrawRay(ray.origin, ray.direction.normalized * distance, Color.red);
-            if (Physics.Raycast(ray.origin, ray.direction.normalized * distance, out hit, distance))
+            if (Physics.Raycast(ray.origin, ray.direction.normalized * distance, out hit, distance, layerMaskCheck))
             {
                 Debug.DrawRay(hit.point, hit.normal * speed, Color.green);
                 rb.AddForce(hit.normal.normalized * speed, ForceMode.Force);
