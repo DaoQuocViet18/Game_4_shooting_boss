@@ -23,7 +23,7 @@ public class Shooting : MonoBehaviour
 
     [Header("Bar")]
     public int border_mana = 3;
-    HealthBar healthBar;
+    HealthMana healthBar;
     private void Awake()
     {
         IsReady = new bool[weapon.Length];
@@ -38,7 +38,7 @@ public class Shooting : MonoBehaviour
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        healthBar = GameObject.Find("Player").GetComponent<HealthBar>();
+        healthBar = GameObject.Find("Player").GetComponent<HealthMana>();
         healthBar.setMaxMana(border_mana);
         effect[0].SetActive(false);
     }

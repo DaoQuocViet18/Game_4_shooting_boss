@@ -25,11 +25,14 @@ public class Bullet : MonoBehaviour
     {
         //collision.gameObject.GetComponent<MeshCollider>().enabled = true;
 
-        par = Instantiate(par_Bullet, transform.position, transform.rotation);
-        par.transform.LookAt(playerCam.orientation);
+        if (collision.transform.CompareTag("Untagged"))
+        {
+            par = Instantiate(par_Bullet, transform.position, transform.rotation);
+            par.transform.LookAt(playerCam.orientation);
 
-        gameObject.SetActive(false);
-        Invoke("End", 5);
+            gameObject.SetActive(false);
+            Invoke("End", 2);
+        }
     }
 
     void End()

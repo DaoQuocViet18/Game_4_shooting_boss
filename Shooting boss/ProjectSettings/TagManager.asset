@@ -6,6 +6,7 @@ TagManager:
   tags:
   - DamageForEnemy
   - Gound
+  - DamageForPlayer
   layers:
   - Default
   - TransparentFX
