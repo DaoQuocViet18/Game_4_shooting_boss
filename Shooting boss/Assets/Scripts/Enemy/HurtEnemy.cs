@@ -12,6 +12,14 @@ public class HurtEnemy : Hurt
         healthBar.SetMaxHealth(maxHealth);
     }
 
+    protected override void Collision(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("DamageForEnemy"))
+        {
+            takeDamage(20);
+        }
+    }
+
     protected override void takeDamage(int damage)
     {
         currentHealth -= damage;

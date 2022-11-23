@@ -13,6 +13,14 @@ public class HurtPlayer : Hurt
         healthBar.SetMaxHealth(maxHealth);
     }
 
+    protected override void Collision(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("DamageForPlayer"))
+        {
+            takeDamage(5);
+        }
+    }
+
     protected override void takeDamage(int damage)
     {
         currentHealth -= damage;
