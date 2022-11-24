@@ -21,7 +21,6 @@ public class boomerang : MonoBehaviour
     PlayerCam playerCam;
     Shooting shooting;
     public float time_Tel;
-    public ParticleSystem telParticle;
     public KeyCode telKey = KeyCode.Mouse1;
 
     // Start is called before the first frame update

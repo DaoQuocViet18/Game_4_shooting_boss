@@ -32,12 +32,12 @@ public class EnemyShoot : MonoBehaviour
         for (int i = 0; i < 4; i++)
         {
             targetLine = (player.transform.position - shooting_left[i].transform.position).normalized;
-            currentBul = Instantiate(bullet, shooting_left[i].transform.position, shooting_left[i].transform.rotation);
+            currentBul = Instantiate(bullet, shooting_left[i].transform.position, transform.transform.rotation);
             projectRb = currentBul.GetComponent<Rigidbody>();
             projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
 
             targetLine = (player.transform.position - shooting_left[i].transform.position).normalized;
-            currentBul = Instantiate(bullet, shooting_right[i].transform.position, shooting_left[i].transform.rotation);
+            currentBul = Instantiate(bullet, shooting_right[i].transform.position, transform.transform.rotation);
             projectRb = currentBul.GetComponent<Rigidbody>();
             projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
         }
