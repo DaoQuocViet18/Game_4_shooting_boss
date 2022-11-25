@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HurtPlayer : Hurt
 {
-
     public HealthBar1 healthBar;
+    public GameObject End_Screen;
 
     void Start()
     {
@@ -28,6 +28,9 @@ public class HurtPlayer : Hurt
 
         if (currentHealth <= 0)
         {
+            End_Screen.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
             Time.timeScale = 0;
         }
     }
