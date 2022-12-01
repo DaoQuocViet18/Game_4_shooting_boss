@@ -6,11 +6,21 @@ public class HurtPlayer : Hurt
 {
     public HealthBar1 healthBar;
     public GameObject End_Screen;
-
+    float timedeath;
     void Start()
     {
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
+    }
+
+    private void Update()
+    {
+
+        if (transform.position.y < -50 && Time.time > timedeath)
+        {
+            takeDamage(20);
+            timedeath = Time.time + 2;
+        }
     }
 
     protected override void Collision(Collision collision)
