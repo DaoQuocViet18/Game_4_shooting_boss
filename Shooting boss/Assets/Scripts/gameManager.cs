@@ -11,7 +11,7 @@ public class gameManager : MonoBehaviour
     private int score;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
 
     }
@@ -29,6 +29,11 @@ public class gameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         Time.timeScale = 1;
+    }    
+
+    public void Exit()
+    {
+        SceneManager.LoadScene(0);
     }    
 
     public void Score(int point)
