@@ -8,12 +8,13 @@ public class gameManager : MonoBehaviour
 {
     public GameObject End_Screen;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI textName;
     private int score;
 
     // Start is called before the first frame update
     void OnEnable()
     {
-
+        textName.text = MainManager.Instance.namePlayer;
     }
 
     // Update is called once per frame
@@ -33,6 +34,11 @@ public class gameManager : MonoBehaviour
 
     public void Exit()
     {
+        if (score > MainManager.Instance.bestScore)
+        {
+            MainManager.Instance.saveBestScore(MainManager.Instance.namePlayer, score);
+        }
+
         SceneManager.LoadScene(0);
     }    
 

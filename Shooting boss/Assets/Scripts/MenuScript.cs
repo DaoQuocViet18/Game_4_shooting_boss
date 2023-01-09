@@ -8,10 +8,15 @@ public class MenuScript : MonoBehaviour
 {
     public GameObject Start_Screen;
     public GameObject Guide_Screen;
+    public TextMeshProUGUI bestScore;
+
     private void OnEnable()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        MainManager.Instance.loadBestScore();
+        bestScore.text = MainManager.Instance.namePlayer + " :  " + MainManager.Instance.bestScore;
     }
 
     public void Enter_Name(TMP_InputField EN)
