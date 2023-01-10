@@ -6,7 +6,7 @@ public class HurtPlayer : Hurt
 {
     public HealthBar1 healthBar;
     public GameObject End_Screen;
-    float timedeath;
+    public float timedeath;
     void Start()
     {
         currentHealth = maxHealth;

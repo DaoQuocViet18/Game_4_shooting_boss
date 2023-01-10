@@ -37,15 +37,15 @@ public class WeaponSwitching : MonoBehaviour
         }
 
         // the second way
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Keypad1))
         {
             selectWeapon = 0;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && transform.childCount >= 2)
+        else if (Input.GetKeyDown(KeyCode.Keypad2) && transform.childCount >= 2)
         {
             selectWeapon = 1;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha3) && transform.childCount >= 3)
+        else if (Input.GetKeyDown(KeyCode.Keypad3) && transform.childCount >= 3)
         {
             selectWeapon = 2;
         }

@@ -7,14 +7,12 @@ public class StartGame : MonoBehaviour
     public GameObject door;
     Shooting shooting;
     boomerang boomerang;
-    HealthMana mana;
     SpawnManage SP;
 
     private void Start()
     {
         shooting = GameObject.Find("Weapon").GetComponent<Shooting>();
         SP = GameObject.Find("SpawnManage").GetComponent<SpawnManage>();
-        mana = GameObject.Find("Player").GetComponent<HealthMana>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +21,7 @@ public class StartGame : MonoBehaviour
         {
             SP.active_Spawn_begin();
             door.SetActive(true);
-            if (mana.sliderMana.value == 0)
+            if (shooting.IsReady[1] == false)
             {
                 boomerang = GameObject.Find("boomerang_1(Clone)").GetComponent<boomerang>();
 

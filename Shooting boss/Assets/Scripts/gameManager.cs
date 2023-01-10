@@ -38,6 +38,7 @@ public class gameManager : MonoBehaviour
         {
             MainManager.Instance.saveBestScore(MainManager.Instance.namePlayer, score);
         }
+        Time.timeScale = 1;
 
         SceneManager.LoadScene(0);
     }    
