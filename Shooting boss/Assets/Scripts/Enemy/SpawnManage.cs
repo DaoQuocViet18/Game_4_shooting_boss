@@ -10,8 +10,8 @@ public class SpawnManage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 location = new Vector3(Random.Range(0, 16), 2, Random.Range(0, 16));
-        Instantiate(enemy, location, enemy.transform.rotation);
+        //Vector3 location = new Vector3(Random.Range(0, 16), 2, Random.Range(0, 16));
+        //Instantiate(enemy, location, enemy.transform.rotation);
     }
 
     // Update is called once per frame
@@ -25,7 +25,12 @@ public class SpawnManage : MonoBehaviour
         GameObject enemy_delete = Instantiate(enemy_death, pos.position, pos.rotation);
         StartCoroutine(spawn());
         StartCoroutine(delete(enemy_delete));
-    }    
+    }
+
+    public void active_Spawn_begin()
+    {
+        StartCoroutine(spawn());
+    }
 
     IEnumerator spawn()
     {

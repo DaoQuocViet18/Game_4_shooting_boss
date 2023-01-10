@@ -8,6 +8,7 @@ public class HealthMana : MonoBehaviour
     Shooting shooting;
     public Slider sliderMana;
     bool recovered = false;
+
     private void Start()
     {
         shooting = GameObject.Find("Weapon").GetComponent<Shooting>();

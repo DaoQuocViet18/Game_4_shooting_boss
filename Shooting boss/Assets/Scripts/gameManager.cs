@@ -47,4 +47,6 @@ public class gameManager : MonoBehaviour
         score += point;
         scoreText.text = "" + score;
     }    
+
+
 }
