@@ -7,8 +7,15 @@ public class HurtPlayer : Hurt
     public HealthBar1 healthBar;
     public GameObject End_Screen;
     public float timedeath;
+
+    [Header("Sound")]
+    public AudioClip hurtSound;
+    private AudioSource playerAudio;
+
     void Start()
     {
+        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();
+
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
     }
@@ -27,6 +34,7 @@ public class HurtPlayer : Hurt
     {
         if (collision.gameObject.CompareTag("DamageForPlayer"))
         {
+            playerAudio.PlayOneShot(hurtSound);
             takeDamage(5);
         }
     }

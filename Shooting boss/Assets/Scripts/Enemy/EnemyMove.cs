@@ -9,11 +9,14 @@ public class EnemyMove : MonoBehaviour
     GameObject player;
     public NavMeshAgent agent;
 
+    public GameObject[] body;
+
     // Start is called before the first frame update
     void Start()
     {
         telParticle.Play();
         player = GameObject.Find("Player");
+        Invoke("appear", 0.25f);
     }
 
     // Update is called once per frame
@@ -21,6 +24,14 @@ public class EnemyMove : MonoBehaviour
     {
         move();
     }
+
+    void appear()
+    {
+        for (int i = 0; i < body.Length; i++)
+        {
+            body[i].SetActive(true);
+        }
+    }    
 
     void move()
     {

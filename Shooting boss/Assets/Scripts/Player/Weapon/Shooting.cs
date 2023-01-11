@@ -24,6 +24,11 @@ public class Shooting : MonoBehaviour
     [Header("Bar")]
     public int border_mana = 3;
     HealthMana healthBar;
+
+    [Header("Sound")]
+    public AudioClip shootingSound;
+    private AudioSource playerAudio;
+
     private void Awake()
     {
         IsReady = new bool[weapon.Length];
@@ -39,6 +44,7 @@ public class Shooting : MonoBehaviour
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
         healthBar = GameObject.Find("Player").GetComponent<HealthMana>();
+        playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();
         healthBar.setMaxMana(border_mana);
         effect[0].SetActive(false);
     }
@@ -70,6 +76,8 @@ public class Shooting : MonoBehaviour
         Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
 
         projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
+
+        playerAudio.PlayOneShot(shootingSound);
         Action();
     }
 
