@@ -20304,6 +20304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e53fabb6aa87d045b727a5038fa31d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  healing: {fileID: 2056385641542655243, guid: 320279799ec54094aaf8dc379f1a6b8f, type: 3}
   enemy: {fileID: 8344276822024851101, guid: 5c2dc4a2dff084b47a552a44409dec86, type: 3}
   enemy_death: {fileID: 8344276822024851101, guid: 2a85678311679da419fae4190f5d9de1, type: 3}
 --- !u!4 &1876168082

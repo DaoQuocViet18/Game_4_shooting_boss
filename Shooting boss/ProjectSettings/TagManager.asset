@@ -7,6 +7,7 @@ TagManager:
   - DamageForEnemy
   - Gound
   - DamageForPlayer
+  - Healing
   layers:
   - Default
   - TransparentFX

@@ -25,7 +25,7 @@ public class HurtPlayer : Hurt
 
         if (transform.position.y < -50 && Time.time > timedeath)
         {
-            takeDamage(20);
+            takeDamage(40);
             timedeath = Time.time + 2;
         }
     }
@@ -36,6 +36,18 @@ public class HurtPlayer : Hurt
         {
             playerAudio.PlayOneShot(hurtSound);
             takeDamage(5);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Healing"))
+        {
+            currentHealth += 50;
+            healthBar.SetHealth(currentHealth);
+            Destroy(other.gameObject);
+
+            Debug.Log("healing");
         }
     }
 

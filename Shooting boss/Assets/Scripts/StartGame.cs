@@ -6,12 +6,14 @@ public class StartGame : MonoBehaviour
 {
     public GameObject door;
     Shooting shooting;
+    HealthMana healthMana;
     boomerang boomerang;
     SpawnManage SP;
 
     private void Start()
     {
         shooting = GameObject.Find("Weapon").GetComponent<Shooting>();
+        healthMana = GameObject.Find("Player").GetComponent<HealthMana>();
         SP = GameObject.Find("SpawnManage").GetComponent<SpawnManage>();
     }
 
@@ -21,7 +23,7 @@ public class StartGame : MonoBehaviour
         {
             SP.active_Spawn_begin();
             door.SetActive(true);
-            if (shooting.IsReady[1] == false)
+            if (shooting.IsReady[1] == false && healthMana.sliderMana.value == healthMana.sliderMana.maxValue)
             {
                 boomerang = GameObject.Find("boomerang_1(Clone)").GetComponent<boomerang>();
 

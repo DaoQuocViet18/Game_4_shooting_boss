@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SpawnManage : MonoBehaviour
 {
+    public GameObject healing;
     public GameObject enemy;
     public GameObject enemy_death;
 
@@ -48,5 +49,9 @@ public class SpawnManage : MonoBehaviour
         Destroy(enemy_delete);
     }
 
-
+    public void spawn_healing()
+    {
+        Vector3 location = new Vector3(Random.Range(-130, -23), 1, Random.Range(-32, 33));
+        Instantiate(healing, location, healing.transform.rotation);
+    }    
 }

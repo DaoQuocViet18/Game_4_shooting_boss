@@ -11,9 +11,12 @@ public class gameManager : MonoBehaviour
     public TextMeshProUGUI textName;
     private int score;
 
+    SpawnManage spawnManage;
+
     // Start is called before the first frame update
     void OnEnable()
     {
+        spawnManage = GameObject.Find("SpawnManage").GetComponent<SpawnManage>();
         textName.text = MainManager.Instance.namePlayer;
     }
 
@@ -29,6 +32,12 @@ public class gameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        if (score > MainManager.Instance.bestScore)
+        {
+            MainManager.Instance.saveBestScore(MainManager.Instance.namePlayer, score);
+        }
+
         Time.timeScale = 1;
     }    
 
@@ -47,6 +56,11 @@ public class gameManager : MonoBehaviour
     {
         score += point;
         scoreText.text = "" + score;
+
+        if (score % 5 == 0)
+        {
+            spawnManage.spawn_healing();
+        }
     }    
 
 

@@ -23,7 +23,7 @@ public class Shooting : MonoBehaviour
 
     [Header("Bar")]
     public int border_mana = 3;
-    HealthMana healthBar;
+    HealthMana healthMana;
 
     [Header("Sound")]
     public AudioClip shootingSound;
@@ -43,9 +43,9 @@ public class Shooting : MonoBehaviour
         anim = GameObject.Find("Weapon").GetComponent<Animator>();
         weaponSwitching = GameObject.Find("Weapon").GetComponent<WeaponSwitching>();
         playerMovement = GameObject.Find("Player").GetComponent<PlayerMovement>();
-        healthBar = GameObject.Find("Player").GetComponent<HealthMana>();
+        healthMana = GameObject.Find("Player").GetComponent<HealthMana>();
         playerAudio = GameObject.Find("Player").GetComponent<AudioSource>();
-        healthBar.setMaxMana(border_mana);
+        healthMana.setMaxMana(border_mana);
         effect[0].SetActive(false);
     }
 
@@ -114,7 +114,7 @@ public class Shooting : MonoBehaviour
 
         weapon[1].SetActive(true);
 
-        healthBar.takeMana();
+        healthMana.takeMana();
     }
 
     IEnumerator Sword()
