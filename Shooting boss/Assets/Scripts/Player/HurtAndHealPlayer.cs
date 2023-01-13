@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HurtPlayer : Hurt
+public class HurtAndHealPlayer : Hurt
 {
     public HealthBar1 healthBar;
     public GameObject End_Screen;
     public float timedeath;
 
     [Header("Sound")]
+    public AudioClip healingSound;
     public AudioClip hurtSound;
     private AudioSource playerAudio;
 
@@ -43,13 +44,17 @@ public class HurtPlayer : Hurt
     {
         if (other.gameObject.CompareTag("Healing"))
         {
-            currentHealth += 50;
-            healthBar.SetHealth(currentHealth);
-            Destroy(other.gameObject);
-
-            Debug.Log("healing");
+            playerAudio.PlayOneShot(healingSound);
+            healingHealth(other);
         }
     }
+
+    private void healingHealth(Collider other)
+    {
+        currentHealth += 50;
+        healthBar.SetHealth(currentHealth);
+        Destroy(other.gameObject);
+    }    
 
     protected override void takeDamage(int damage)
     {

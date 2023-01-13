@@ -17,10 +17,16 @@ public class WeaponSwitching : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Time.timeScale == 1)
+            input();
+    }
+
+    void input()       
+    {
         int previousSelectedWeapon = selectWeapon;
 
         // The first way
-        if (Input.GetAxis("Mouse ScrollWheel")>0)
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
         {
             if (selectWeapon >= transform.childCount - 1)
                 selectWeapon = 0;
@@ -54,7 +60,7 @@ public class WeaponSwitching : MonoBehaviour
         {
             SelectWeapon();
         }
-    }
+    }    
 
     void SelectWeapon()
     {

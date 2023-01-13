@@ -76,15 +76,16 @@ public class Shooting : MonoBehaviour
         Rigidbody projectRb = currentBul.GetComponent<Rigidbody>();
 
         projectRb.AddForce(targetLine * shootForce, ForceMode.Impulse);
-
-        playerAudio.PlayOneShot(shootingSound);
         Action();
     }
 
     void Action()
     {
         if (weaponSwitching.selectWeapon == 0 && IsReady[0] == true)
+        {
+            playerAudio.PlayOneShot(shootingSound);
             StartCoroutine(Gun());
+        }    
         else if (weaponSwitching.selectWeapon == 1 && IsReady[1] == true)
             Boomerang();
     }

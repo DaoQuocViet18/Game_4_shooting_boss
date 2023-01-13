@@ -5681,6 +5681,7 @@ MonoBehaviour:
   healthBar: {fileID: 1047928976}
   End_Screen: {fileID: 553887415}
   timedeath: 0
+  healingSound: {fileID: 8300000, guid: 25df58c12db025b4b97caedc24cbab86, type: 3}
   hurtSound: {fileID: 8300000, guid: 880f6e20563aef848a547ccbd48e292c, type: 3}
 --- !u!82 &914799026
 AudioSource:
